@@ -27,9 +27,16 @@ import numpy as np
 import pandas as pd
 import logging
 from datetime import datetime
-from openpyxl import Workbook, load_workbook
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-from openpyxl.utils import get_column_letter
+try:
+    from openpyxl import Workbook, load_workbook
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+    from openpyxl.utils import get_column_letter
+    OPENPYXL_AVAILABLE = True
+except ModuleNotFoundError:
+    Workbook = load_workbook = None
+    Font = PatternFill = Alignment = Border = Side = None
+    get_column_letter = None
+    OPENPYXL_AVAILABLE = False
 
 import tensorflow as tf
 import tensorflow_probability as tfp
